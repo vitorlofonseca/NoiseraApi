@@ -2,7 +2,7 @@
 
 ### Introduction
 
-Noisera is an app to organize musical tryouts. You can store songs letters, tabs, sheets, and set its characteristics, like tone, anormal interruptions, and much another things.
+Noisera is an app to organize musical gigs. You can store songs letters, tabs, sheets, and set its characteristics, like tone, anormal interruptions, and many other things.
 
 The scripts and configurations contained in this project are running on Amazon AWS. The following technologies are being used:
 
