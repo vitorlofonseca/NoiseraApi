@@ -1,3 +1,0 @@
-INSERT INTO gigs (name, description, avatar_url) VALUES ('Nefils', 'Gig in carnival', 'http://3.bp.blogspot.com/_ZyNtuoH3ix4/TI-XTT1wdjI/AAAAAAAACJs/9c-JErDnAIw/s1600/1.jpg');
-INSERT INTO gigs (name, description, avatar_url) VALUES ('Teck\'s Reunion', 'Gig in the itaipava\'s ', 'https://www.grupopetropolis.com.br/grpptrpls/wp-content/uploads/itaipava.png');
-INSERT INTO gigs (name, description, avatar_url) VALUES ('System of Systems', 'Songs of Rural\'s gig', 'https://d1i0fc51bv4e6i.cloudfront.net/noticias/wp-content/uploads/2015/10/14110916/ufrrj.png');
