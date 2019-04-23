@@ -10,7 +10,7 @@ namespace ListGigsAWS
 {
     public class ListGigsAWS
     {
-        public JObject FunctionHandler(JObject input, ILambdaContext context)
+        public JObject FunctionHandler()
         {
             string server = "noisera-db.cx3rqev00cim.us-east-1.rds.amazonaws.com";
             string database = "noiseradb";
@@ -25,14 +25,14 @@ namespace ListGigsAWS
             return response;
         }
 
-        private JObject ListGigs(MySqlConnection DBConnection)
+        private JObject ListGigs(MySqlConnection conn)
         {
-            var Cmd = new MySqlCommand($"SELECT * FROM gigs", DBConnection)
+            var Cmd = new MySqlCommand($"SELECT * FROM gigs", conn)
             {
                 CommandTimeout = 0
             };
 
-            DBConnection.Open();
+            conn.Open();
             var DataReader = Cmd.ExecuteReader();
 
             List<Gig> GigsList = new List<Gig>();
@@ -43,33 +43,34 @@ namespace ListGigsAWS
                     DataReader["name"].ToString(),
                     DataReader["description"].ToString(),
                     DataReader["avatar_url"].ToString(),
-                    (int)DataReader["spotify_playlist_id"]
+                    DataReader["spotify_playlist_id"] == DBNull.Value ? null : (int?)DataReader["spotify_playlist_id"]
                 );
                 GigsList.Add(Gig);
             }
 
             JObject Gigs = new JObject
             {
-                ["gigs"] = JToken.FromObject(GigsList)
+                ["Gigs"] = JToken.FromObject(GigsList)
             };
 
+            conn.Close();
             return Gigs;
         }
     }
 
     class Gig
     {
-        public string name { get; private set; }
-        public string description { get; private set; }
-        public string avatar_url { get; private set; }
-        public int spotify_playlist_id { get; private set; }
+        public string Name { get; private set; }
+        public string Description { get; private set; }
+        public string AvatarUrl { get; private set; }
+        public int? SpotifyPlaylistId { get; private set; }
 
-        public Gig(string _name, string _description, string _avatar_url, int _spotify_playlist_id)
+        public Gig(string name, string description, string avatarUrl, int? spotifyPlaylistId)
         {
-            name = _name;
-            description = _description;
-            avatar_url = _avatar_url;
-            spotify_playlist_id = _spotify_playlist_id;
+            Name = name;
+            Description = description;
+            AvatarUrl = avatarUrl;
+            SpotifyPlaylistId = spotifyPlaylistId;
         }
     }
 }
