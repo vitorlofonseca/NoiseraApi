@@ -27,25 +27,49 @@ namespace ListGigsAWS
 
         private JObject ListGigs(MySqlConnection DBConnection)
         {
-            var Cmd = new MySqlCommand($"SELECT * FROM gigs", DBConnection);
-            Cmd.CommandTimeout = 0;
-            DBConnection.Open();
-            var rdr = Cmd.ExecuteReader();
-            List<string> gigsList = new List<string>();
-            while (rdr.Read())
+            var Cmd = new MySqlCommand($"SELECT * FROM gigs", DBConnection)
             {
-                gigsList.Add('{' +
-                    "name: " + rdr[1].ToString() + ", " +
-                    "description: " + rdr[2].ToString() + ", " +
-                    "avatar: " + rdr[3].ToString() + " " +
-                '}');
+                CommandTimeout = 0
+            };
+
+            DBConnection.Open();
+            var DataReader = Cmd.ExecuteReader();
+
+            List<Gig> GigsList = new List<Gig>();
+
+            while (DataReader.Read())
+            {
+                Gig Gig = new Gig(
+                    DataReader["name"].ToString(),
+                    DataReader["description"].ToString(),
+                    DataReader["avatar_url"].ToString(),
+                    (int)DataReader["spotify_playlist_id"]
+                );
+                GigsList.Add(Gig);
             }
 
-            JObject gigs = new JObject();
+            JObject Gigs = new JObject
+            {
+                ["gigs"] = JToken.FromObject(GigsList)
+            };
 
-            gigs["gigs"] = JToken.FromObject(gigsList);
+            return Gigs;
+        }
+    }
 
-            return gigs;
+    class Gig
+    {
+        public string name { get; private set; }
+        public string description { get; private set; }
+        public string avatar_url { get; private set; }
+        public int spotify_playlist_id { get; private set; }
+
+        public Gig(string _name, string _description, string _avatar_url, int _spotify_playlist_id)
+        {
+            name = _name;
+            description = _description;
+            avatar_url = _avatar_url;
+            spotify_playlist_id = _spotify_playlist_id;
         }
     }
 }
