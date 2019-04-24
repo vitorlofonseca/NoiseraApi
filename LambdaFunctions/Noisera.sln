@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListGigsAWS", "ListGigsAWS\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListGigsAWS.Tests", "ListGigsAWS.Tests\ListGigsAWS.Tests.csproj", "{80F6CBD1-2B34-41A5-A930-E5E07BC49B5B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CreateGigsAWS", "CreateGigsAWS\CreateGigsAWS.csproj", "{8886B015-493B-4C61-8533-095745542C20}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CreateGigsAWS.Tests", "CreateGigsAWS.Tests\CreateGigsAWS.Tests.csproj", "{D51CD667-50E8-48A7-A715-FE1A6F9B574B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{80F6CBD1-2B34-41A5-A930-E5E07BC49B5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80F6CBD1-2B34-41A5-A930-E5E07BC49B5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80F6CBD1-2B34-41A5-A930-E5E07BC49B5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8886B015-493B-4C61-8533-095745542C20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8886B015-493B-4C61-8533-095745542C20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8886B015-493B-4C61-8533-095745542C20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8886B015-493B-4C61-8533-095745542C20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D51CD667-50E8-48A7-A715-FE1A6F9B574B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D51CD667-50E8-48A7-A715-FE1A6F9B574B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D51CD667-50E8-48A7-A715-FE1A6F9B574B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D51CD667-50E8-48A7-A715-FE1A6F9B574B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
