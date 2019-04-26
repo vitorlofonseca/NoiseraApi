@@ -12,11 +12,12 @@ namespace ListGigsAWS
     {
         public JObject FunctionHandler()
         {
-            string server = "noisera-db.cx3rqev00cim.us-east-1.rds.amazonaws.com";
-            string database = "noiseradb";
-            string username = "noiserauser";
-            string pwd = "noiserapass";
-            string ConnectionString = String.Format("Server={0}; Port=3306; Database={1}; Uid={2}; Pwd={3};", server, database, username, pwd);
+            string server = Environment.GetEnvironmentVariable("db_server");
+            string database = Environment.GetEnvironmentVariable("db_name");
+            string username = Environment.GetEnvironmentVariable("db_user");
+            string pwd = Environment.GetEnvironmentVariable("db_pass");
+            string port = Environment.GetEnvironmentVariable("db_port");
+            string ConnectionString = String.Format("Server={0}; Port={4}; Database={1}; Uid={2}; Pwd={3};", server, database, username, pwd, port);
 
             MySqlConnection Conn = new MySqlConnection(ConnectionString);
 
