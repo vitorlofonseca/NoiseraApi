@@ -42,12 +42,12 @@ namespace ListGigsAWS
             while (DataReader.Read())
             {
                 Gig Gig = new Gig(
-                    DataReader["guid"].ToString(),
-                    DataReader["name"].ToString(),
-                    DataReader["description"].ToString(),
-                    DataReader["avatar_url"].ToString(),
-                    DataReader["spotify_playlist_id"] == DBNull.Value ? null : (int?)DataReader["spotify_playlist_id"],
-                    DataReader["band_guid"].ToString()
+                    DataReader["GUID"].ToString(),
+                    DataReader["Name"].ToString(),
+                    DataReader["Description"].ToString(),
+                    DataReader["AvatarUrl"].ToString(),
+                    DataReader["SpotifyPlaylistId"] == DBNull.Value ? null : (int?)DataReader["SpotifyPlaylistId"],
+                    DataReader["BandGUID"].ToString()
                 );
                 GigsList.Add(Gig); 
             }

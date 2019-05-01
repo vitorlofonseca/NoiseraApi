@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using MySql.Data.MySqlClient;
 using Amazon.Lambda.Core;
@@ -33,7 +32,7 @@ namespace CreateGigsAWS
             var Cmd = new MySqlCommand($"", conn)
             {
                 CommandTimeout = 0,
-                CommandText = "INSERT INTO gigs(guid, name, description, avatar_url, spotify_playlist_id, band_guid) " +
+                CommandText = "INSERT INTO gigs(GUID, Name, Description, AvatarUrl, SpotifyPlaylistId, BandGUID) " +
                     "VALUES(@GUID, @Name, @Description, @AvatarUrl, @SpotifyPlaylistId, @BandGUID);"
             };
             Cmd.Parameters.AddWithValue("@GUID", gig.GUID);
