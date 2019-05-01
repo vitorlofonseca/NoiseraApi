@@ -13,7 +13,7 @@
     "function-runtime" : "dotnetcore2.1",
     "function-memory-size" : 256,
     "function-timeout"     : 30,
-    "function-handler"     : "ListGigsAWS::ListGigsAWS.ListGigsAWS::FunctionHandler",
+    "function-handler"     : "ListGigsAWS::ListGigsAWS.ListGigsAWS::ListGigsHandler",
     "function-name"        : "ListGigs",
     "function-role"        : "arn:aws:iam::672240225184:role/lambdaNoiseraRole",
     "tracing-mode"         : "PassThrough",

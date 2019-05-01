@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using MySql.Data.MySqlClient;
 using Amazon.Lambda.Core;
+using Noisera.Domain;
 
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
 
@@ -10,7 +11,7 @@ namespace ListGigsAWS
 {
     public class ListGigsAWS
     {
-        public JObject FunctionHandler()
+        public JObject ListGigsHandler()
         {
             string server = Environment.GetEnvironmentVariable("db_server");
             string database = Environment.GetEnvironmentVariable("db_name");
@@ -41,12 +42,14 @@ namespace ListGigsAWS
             while (DataReader.Read())
             {
                 Gig Gig = new Gig(
+                    DataReader["guid"].ToString(),
                     DataReader["name"].ToString(),
                     DataReader["description"].ToString(),
                     DataReader["avatar_url"].ToString(),
-                    DataReader["spotify_playlist_id"] == DBNull.Value ? null : (int?)DataReader["spotify_playlist_id"]
+                    DataReader["spotify_playlist_id"] == DBNull.Value ? null : (int?)DataReader["spotify_playlist_id"],
+                    DataReader["band_guid"].ToString()
                 );
-                GigsList.Add(Gig);
+                GigsList.Add(Gig); 
             }
 
             JObject Gigs = new JObject
@@ -56,22 +59,6 @@ namespace ListGigsAWS
 
             conn.Close();
             return Gigs;
-        }
-    }
-
-    class Gig
-    {
-        public string Name { get; private set; }
-        public string Description { get; private set; }
-        public string AvatarUrl { get; private set; }
-        public int? SpotifyPlaylistId { get; private set; }
-
-        public Gig(string name, string description, string avatarUrl, int? spotifyPlaylistId)
-        {
-            Name = name;
-            Description = description;
-            AvatarUrl = avatarUrl;
-            SpotifyPlaylistId = spotifyPlaylistId;
         }
     }
 }
