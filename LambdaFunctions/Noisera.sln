@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CreateGigsAWS", "CreateGigs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CreateGigsAWS.Tests", "CreateGigsAWS.Tests\CreateGigsAWS.Tests.csproj", "{D51CD667-50E8-48A7-A715-FE1A6F9B574B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Noisera.Domain", "Noisera.Domain\Noisera.Domain.csproj", "{0E21D170-3F62-4EA6-A249-B5A5B04ABE1C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Noisera.Domain", "Noisera.Domain\Noisera.Domain.csproj", "{0E21D170-3F62-4EA6-A249-B5A5B04ABE1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Noisera.Core", "Noisera.Core\Noisera.Core.csproj", "{A6A4F407-68C9-4EB8-9F31-FC8BEE6D2338}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{0E21D170-3F62-4EA6-A249-B5A5B04ABE1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E21D170-3F62-4EA6-A249-B5A5B04ABE1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E21D170-3F62-4EA6-A249-B5A5B04ABE1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6A4F407-68C9-4EB8-9F31-FC8BEE6D2338}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6A4F407-68C9-4EB8-9F31-FC8BEE6D2338}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6A4F407-68C9-4EB8-9F31-FC8BEE6D2338}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6A4F407-68C9-4EB8-9F31-FC8BEE6D2338}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

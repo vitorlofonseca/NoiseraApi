@@ -1,8 +1,9 @@
 ﻿using System;
+using Noisera.Core;
 
 namespace Noisera.Domain
 {
-    public class Gig
+    public class Gig : IAggregateRoot
     {
         public string GUID { get; private set; }
         public string Name { get; private set; }
