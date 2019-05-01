@@ -15,6 +15,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Noisera.Domain", "Noisera.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Noisera.Core", "Noisera.Core\Noisera.Core.csproj", "{A6A4F407-68C9-4EB8-9F31-FC8BEE6D2338}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LambdaFunctionsTests", "LambdaFunctionsTests", "{A6627322-3B77-4693-9E84-71818D4FE30B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LambdaFunctions", "LambdaFunctions", "{8CEC1092-9390-48F9-9F17-6DD15D9DD72B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +52,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{928E9220-1FE9-486C-999E-01D4EDF4CB0B} = {8CEC1092-9390-48F9-9F17-6DD15D9DD72B}
+		{80F6CBD1-2B34-41A5-A930-E5E07BC49B5B} = {A6627322-3B77-4693-9E84-71818D4FE30B}
+		{8886B015-493B-4C61-8533-095745542C20} = {8CEC1092-9390-48F9-9F17-6DD15D9DD72B}
+		{D51CD667-50E8-48A7-A715-FE1A6F9B574B} = {A6627322-3B77-4693-9E84-71818D4FE30B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4B697E70-AF3C-4290-BF45-FA804B7CFFBC}
