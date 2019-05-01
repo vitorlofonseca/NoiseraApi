@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.202
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.106
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListGigsAWS", "ListGigsAWS\ListGigsAWS.csproj", "{928E9220-1FE9-486C-999E-01D4EDF4CB0B}"
 EndProject
@@ -13,11 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CreateGigsAWS.Tests", "Crea
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Noisera.Domain", "Noisera.Domain\Noisera.Domain.csproj", "{0E21D170-3F62-4EA6-A249-B5A5B04ABE1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Noisera.Core", "Noisera.Core\Noisera.Core.csproj", "{A6A4F407-68C9-4EB8-9F31-FC8BEE6D2338}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Noisera.Core", "Noisera.Core\Noisera.Core.csproj", "{A6A4F407-68C9-4EB8-9F31-FC8BEE6D2338}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LambdaFunctionsTests", "LambdaFunctionsTests", "{A6627322-3B77-4693-9E84-71818D4FE30B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Noisera.Infrastructure", "NoiseraDatabase\Noisera.Infrastructure.csproj", "{241CF5D9-004B-46B7-BE99-B5278D2DC5E4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LambdaFunctions", "LambdaFunctions", "{8CEC1092-9390-48F9-9F17-6DD15D9DD72B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Noisera.Infrastructure.Test", "Noisera.Infrastructure.Test\Noisera.Infrastructure.Test.csproj", "{49988CED-43CD-42A2-BA9B-12D1D1CF6BEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,15 +49,17 @@ Global
 		{A6A4F407-68C9-4EB8-9F31-FC8BEE6D2338}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6A4F407-68C9-4EB8-9F31-FC8BEE6D2338}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6A4F407-68C9-4EB8-9F31-FC8BEE6D2338}.Release|Any CPU.Build.0 = Release|Any CPU
+		{241CF5D9-004B-46B7-BE99-B5278D2DC5E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{241CF5D9-004B-46B7-BE99-B5278D2DC5E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{241CF5D9-004B-46B7-BE99-B5278D2DC5E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{241CF5D9-004B-46B7-BE99-B5278D2DC5E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49988CED-43CD-42A2-BA9B-12D1D1CF6BEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49988CED-43CD-42A2-BA9B-12D1D1CF6BEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49988CED-43CD-42A2-BA9B-12D1D1CF6BEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49988CED-43CD-42A2-BA9B-12D1D1CF6BEA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{928E9220-1FE9-486C-999E-01D4EDF4CB0B} = {8CEC1092-9390-48F9-9F17-6DD15D9DD72B}
-		{80F6CBD1-2B34-41A5-A930-E5E07BC49B5B} = {A6627322-3B77-4693-9E84-71818D4FE30B}
-		{8886B015-493B-4C61-8533-095745542C20} = {8CEC1092-9390-48F9-9F17-6DD15D9DD72B}
-		{D51CD667-50E8-48A7-A715-FE1A6F9B574B} = {A6627322-3B77-4693-9E84-71818D4FE30B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4B697E70-AF3C-4290-BF45-FA804B7CFFBC}
