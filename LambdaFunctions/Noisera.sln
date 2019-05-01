@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListBandsAWS", "ListBandsAW
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListBandsAWS.Tests", "ListBandsAWS.Tests\ListBandsAWS.Tests.csproj", "{0DD6D200-356D-41EC-B8D2-3E94ED2D0D08}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Noisera.Infrastructure", "Noisera.Infrastructure\Noisera.Infrastructure.csproj", "{E05FFD02-FC9D-4805-AFE5-919CC8D8FA24}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{0DD6D200-356D-41EC-B8D2-3E94ED2D0D08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DD6D200-356D-41EC-B8D2-3E94ED2D0D08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DD6D200-356D-41EC-B8D2-3E94ED2D0D08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E05FFD02-FC9D-4805-AFE5-919CC8D8FA24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E05FFD02-FC9D-4805-AFE5-919CC8D8FA24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E05FFD02-FC9D-4805-AFE5-919CC8D8FA24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E05FFD02-FC9D-4805-AFE5-919CC8D8FA24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
