@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Reflection;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
@@ -9,7 +9,7 @@ namespace Noisera.Infrastructure
 {
     public class NoiseraDatabase
     {
-        public MySqlConnection GetDatabaseConnection()
+        public static MySqlConnection GetDatabaseConnection()
         {
             string server = Environment.GetEnvironmentVariable("db_server");
             string database = Environment.GetEnvironmentVariable("db_name");
@@ -21,7 +21,7 @@ namespace Noisera.Infrastructure
             return new MySqlConnection(ConnectionString);
         }
 
-        public List<dynamic> Select(JArray criterias, string table)
+        public static List<object> Select(JArray criterias, string table)
         {
             List<string> wheres = new List<string>();
 
@@ -43,7 +43,7 @@ namespace Noisera.Infrastructure
 
             }
 
-            MySqlConnection conn = this.GetDatabaseConnection();
+            MySqlConnection conn = GetDatabaseConnection();
 
             string query = "SELECT * FROM " + table + " WHERE " + string.Join(" AND ", wheres) + ";";
 
@@ -72,9 +72,9 @@ namespace Noisera.Infrastructure
             return resultSet;
         }
 
-        public string Insert(IAggregateRoot objectToInsert, string table)
+        public static string Insert(IAggregateRoot objectToInsert, string table)
         {
-
+            MySqlConnection conn = GetDatabaseConnection();
             MySqlConnection conn = this.GetDatabaseConnection();
             List<string> inColumns = new List<string>();
             List<string> nameVariableToValue = new List<string>();
@@ -93,7 +93,7 @@ namespace Noisera.Infrastructure
             var Cmd = new MySqlCommand($"", conn)
             {
                 CommandTimeout = 0,
-                CommandText = "INSERT INTO " + table + "(" + string.Join(",", inColumns) + ") " +
+                CommandText = "INSERT INTO " + table + "(`" + string.Join("`, `", inColumns) + "`) " +
                     "VALUES(" + string.Join(",", nameVariableToValue) + ");"
             };
 

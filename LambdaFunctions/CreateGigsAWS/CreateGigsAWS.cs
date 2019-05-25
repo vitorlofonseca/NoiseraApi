@@ -1,9 +1,9 @@
-using System;
 using Newtonsoft.Json.Linq;
-using MySql.Data.MySqlClient;
 using Amazon.Lambda.Core;
-using System.Net.Http;
 using Noisera.Domain;
+using System.Collections.Generic;
+using Noisera.Infrastructure;
+using System.Net.Http;
 
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
 
@@ -11,40 +11,68 @@ namespace CreateGigsAWS
 {
     public class CreateGigsAWS
     {
-        public HttpResponseMessage CreateGigsHandler(JObject input)
+        private List<Track> getTracks(JObject requestGig)
         {
-            string server = Environment.GetEnvironmentVariable("db_server");
-            string database = Environment.GetEnvironmentVariable("db_name");
-            string username = Environment.GetEnvironmentVariable("db_user");
-            string pwd = Environment.GetEnvironmentVariable("db_pass");
-            string port = Environment.GetEnvironmentVariable("db_port");
-            string ConnectionString = String.Format("Server={0}; Port={4}; Database={1}; Uid={2}; Pwd={3};", server, database, username, pwd, port);
-
-            MySqlConnection Conn = new MySqlConnection(ConnectionString);
-
-            CreateGig(Conn, input.ToObject<Gig>());
-
-            return new HttpResponseMessage(System.Net.HttpStatusCode.Created);
+            dynamic obj = requestGig;
+            List<Track> tracks = new List<Track>();
+            foreach (dynamic trackJson in obj.Tracks)
+            {
+                Track track = trackJson.ToObject<Track>();
+                tracks.Add(track);
+            }
+            return tracks;
         }
 
-        private void CreateGig(MySqlConnection conn, Gig gig)
+        public string getGuidOfStoredTrack(Track track)
         {
-            var Cmd = new MySqlCommand($"", conn)
-            {
-                CommandTimeout = 0,
-                CommandText = "INSERT INTO gigs(GUID, Name, Description, AvatarUrl, SpotifyPlaylistId, BandGUID) " +
-                    "VALUES(@GUID, @Name, @Description, @AvatarUrl, @SpotifyPlaylistId, @BandGUID);"
-            };
-            Cmd.Parameters.AddWithValue("@GUID", gig.GUID);
-            Cmd.Parameters.AddWithValue("@Name", gig.Name);
-            Cmd.Parameters.AddWithValue("@Description", gig.Description);
-            Cmd.Parameters.AddWithValue("@AvatarUrl", gig.AvatarUrl);
-            Cmd.Parameters.AddWithValue("@SpotifyPlaylistId", gig.SpotifyPlaylistId);
-            Cmd.Parameters.AddWithValue("@BandGUID", gig.BandGUID);
+            JArray filterByGUID = new JArray();
+            filterByGUID.Add(JObject.Parse("{" +
+                    "\"value\": \""+ track.SpotifyId + "\", " +
+                    "\"comparison\": \"=\", " +
+                    "\"columnType\": \"string\", " +
+                    "\"column\": \"SpotifyTrackId\"" +
 
-            conn.Open();
-            Cmd.ExecuteNonQuery();
-            conn.Close();
+                "}"));
+
+            List<object> returnedTracks = NoiseraDatabase.Select(filterByGUID, "tracks");
+
+            foreach(object returnedTrack in returnedTracks)
+            {
+                string guid = (string)((List<object>)returnedTrack)[0];
+                return guid;
+            }
+
+            return null;
+        }
+
+        public void insertGig(Gig gig)
+        {
+            NoiseraDatabase.Insert(new GigDTO(gig), "gigs");
+
+            foreach (Track track in gig.Tracks)
+            {
+                string guidOfStoredTrack = getGuidOfStoredTrack(track);
+
+                if (guidOfStoredTrack == null)
+                {
+                    NoiseraDatabase.Insert(new TrackDTO(track), "tracks");
+                } else
+                {
+                    track.GUID = guidOfStoredTrack;
+                }
+                
+                NoiseraDatabase.Insert(new GigTrackDTO(track, gig), "tracks_gig");
+            }
+        }
+
+        public HttpResponseMessage CreateGigsHandler(JObject input)
+        {
+            Gig gig = input.ToObject<Gig>();
+            gig.Tracks = getTracks(input);
+
+            insertGig(gig);
+
+            return new HttpResponseMessage(System.Net.HttpStatusCode.Created);
         }
     }
 }
