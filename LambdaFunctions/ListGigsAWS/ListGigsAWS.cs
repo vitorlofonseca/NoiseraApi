@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using MySql.Data.MySqlClient;
 using Amazon.Lambda.Core;
 using Noisera.Domain;
+using Noisera.Infrastructure;
 
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
 
@@ -13,52 +14,67 @@ namespace ListGigsAWS
     {
         public JObject ListGigsHandler()
         {
-            string server = Environment.GetEnvironmentVariable("db_server");
-            string database = Environment.GetEnvironmentVariable("db_name");
-            string username = Environment.GetEnvironmentVariable("db_user");
-            string pwd = Environment.GetEnvironmentVariable("db_pass");
-            string port = Environment.GetEnvironmentVariable("db_port");
-            string ConnectionString = String.Format("Server={0}; Port={4}; Database={1}; Uid={2}; Pwd={3};", server, database, username, pwd, port);
 
-            MySqlConnection Conn = new MySqlConnection(ConnectionString);
-
-            JObject response = ListGigs(Conn);
-
-            return response;
-        }
-
-        private JObject ListGigs(MySqlConnection conn)
-        {
-            var Cmd = new MySqlCommand($"SELECT * FROM gigs", conn)
-            {
-                CommandTimeout = 0
-            };
-
-            conn.Open();
-            var DataReader = Cmd.ExecuteReader();
-
-            List<Gig> GigsList = new List<Gig>();
-
-            while (DataReader.Read())
-            {
-                Gig Gig = new Gig(
-                    DataReader["GUID"].ToString(),
-                    DataReader["Name"].ToString(),
-                    DataReader["Description"].ToString(),
-                    DataReader["AvatarUrl"].ToString(),
-                    DataReader["SpotifyPlaylistId"] == DBNull.Value ? null : (int?)DataReader["SpotifyPlaylistId"],
-                    DataReader["BandGUID"].ToString()
-                );
-                GigsList.Add(Gig); 
-            }
+            List<Gig> GigsList = getGigList();
 
             JObject Gigs = new JObject
             {
                 ["Gigs"] = JToken.FromObject(GigsList)
             };
 
-            conn.Close();
-            return Gigs;
+            JObject response = Gigs;
+
+            return response;
+        }
+
+        private List<Track> getTracksByGigGuid(string gigGuid)
+        {
+            List<Dictionary<string, string>> genericTracks = TrackNoiseraDatabase.GetTracksByGigGuid(gigGuid);
+            List<Track> trackList = new List<Track>();
+
+            foreach (Dictionary<string, string> genericTrack in genericTracks)
+            {
+                Track track = new Track(
+                   genericTrack["GUID"],
+                   Convert.ToBoolean(Int32.Parse(genericTrack["Active"])),
+                   genericTrack["Album"],
+                   genericTrack["Artist"],
+                   genericTrack["AvatarUrl"],
+                   genericTrack["Name"],
+                   Int32.Parse(genericTrack["Order"]),
+                   genericTrack["SpotifyTrackId"],
+                   Int32.Parse(genericTrack["Year"])
+                );
+
+                trackList.Add(track);
+
+            }
+
+            return trackList;
+        }
+
+        private List<Gig> getGigList()
+        {
+            List<Dictionary<string, string>> genericGigs = GenericNoiseraDatabase.Select(new JArray(), "gigs");
+            List<Gig> gigList = new List<Gig>();
+
+            foreach (Dictionary<string, string> genericGig in genericGigs)
+            {
+                Gig gig = new Gig(
+                   genericGig["GUID"].ToString(),
+                   genericGig["Name"].ToString(),
+                   genericGig["Description"].ToString(),
+                   genericGig["AvatarUrl"].ToString(),
+                   genericGig["BandGUID"].ToString()
+               );
+
+                gig.Tracks = getTracksByGigGuid(gig.GUID);
+
+                gigList.Add(gig);
+
+            }
+
+            return gigList;
         }
     }
 }

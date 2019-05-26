@@ -13,7 +13,7 @@ namespace Noisera.Domain
         public string BandGUID { get; private set; }
         public List<Track> Tracks { get; set; }
 
-        public Gig(string guid, string name, string description, string avatarUrl, int? spotifyPlaylistId, string bandGUID)
+        public Gig(string guid, string name, string description, string avatarUrl, string bandGUID)
         {
             GUID = String.IsNullOrEmpty(guid) ? Guid.NewGuid().ToString() : guid;
             Name = name;

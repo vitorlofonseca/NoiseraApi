@@ -34,12 +34,11 @@ namespace CreateGigsAWS
 
                 "}"));
 
-            List<object> returnedTracks = NoiseraDatabase.Select(filterByGUID, "tracks");
+            List<Dictionary<string, string>> returnedTracks = GenericNoiseraDatabase.Select(filterByGUID, "tracks");
 
-            foreach(object returnedTrack in returnedTracks)
+            foreach(Dictionary<string, string> returnedTrack in returnedTracks)
             {
-                string guid = (string)((List<object>)returnedTrack)[0];
-                return guid;
+                return returnedTrack["GUID"];
             }
 
             return null;
@@ -47,7 +46,7 @@ namespace CreateGigsAWS
 
         public void insertGig(Gig gig)
         {
-            NoiseraDatabase.Insert(new GigDTO(gig), "gigs");
+            GenericNoiseraDatabase.Insert(new GigDTO(gig), "gigs");
 
             foreach (Track track in gig.Tracks)
             {
@@ -55,13 +54,13 @@ namespace CreateGigsAWS
 
                 if (guidOfStoredTrack == null)
                 {
-                    NoiseraDatabase.Insert(new TrackDTO(track), "tracks");
+                    GenericNoiseraDatabase.Insert(new TrackDTO(track), "tracks");
                 } else
                 {
                     track.GUID = guidOfStoredTrack;
                 }
                 
-                NoiseraDatabase.Insert(new GigTrackDTO(track, gig), "tracks_gig");
+                GenericNoiseraDatabase.Insert(new GigTrackDTO(track, gig), "tracks_gig");
             }
         }
 

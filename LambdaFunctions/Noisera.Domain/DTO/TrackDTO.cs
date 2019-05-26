@@ -10,6 +10,8 @@ namespace Noisera.Domain
         public string Artist { get; private set; }
         public string SpotifyTrackId { get; private set; }
         public string AvatarUrl { get; private set; }
+        public int Year { get; private set; }
+        public string Album { get; private set; }
 
         public TrackDTO(Track track)
         {
@@ -18,6 +20,8 @@ namespace Noisera.Domain
             this.Artist = track.Artist;
             this.SpotifyTrackId = track.SpotifyId;
             this.AvatarUrl = track.Image;
+            this.Year = track.Year;
+            this.Album = track.Album;
         }
     }
 }

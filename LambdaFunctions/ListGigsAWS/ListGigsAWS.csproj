@@ -12,5 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Noisera.Domain\Noisera.Domain.csproj" />
+    <ProjectReference Include="..\Noisera.Infrastructure\Noisera.Infrastructure.csproj" />
   </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Reflection;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Noisera.Infrastructure
 {
-    public class NoiseraDatabase
+    public class GenericNoiseraDatabase
     {
         public static MySqlConnection GetDatabaseConnection()
         {
@@ -21,7 +21,7 @@ namespace Noisera.Infrastructure
             return new MySqlConnection(ConnectionString);
         }
 
-        public static List<object> Select(JArray criterias, string table)
+        public static List<Dictionary<string, string>> Select(JArray criterias, string table)
         {
             List<string> wheres = new List<string>();
 
@@ -45,7 +45,12 @@ namespace Noisera.Infrastructure
 
             MySqlConnection conn = GetDatabaseConnection();
 
-            string query = "SELECT * FROM " + table + " WHERE " + string.Join(" AND ", wheres) + ";";
+            string query = "SELECT * FROM " + table;
+
+            if (wheres.Count > 0)
+            {
+                query += " WHERE " + string.Join(" AND ", wheres) + ";";
+            }
 
             conn.Open();
 
@@ -53,18 +58,20 @@ namespace Noisera.Infrastructure
 
             MySqlDataReader reader = sqlcmd.ExecuteReader();
 
-            List<dynamic> resultSet = new List<dynamic>();
+            List<Dictionary<string, string>> resultSet = new List<Dictionary<string, string>>();
 
             while (reader.Read())
             {
-                List<dynamic> item = new List<dynamic>();
+                Dictionary<string, string> row = new Dictionary<string, string>();
 
-                for(var i=0; i<reader.FieldCount; i++)
+                for (int index = 0; index < reader.FieldCount; index++)
                 {
-                    item.Add(reader.GetValue(i));
+                    string parameterName = reader.GetName(index);
+                    string parameterValue = reader.GetString(index);
+                    row.Add(parameterName, parameterValue);
                 }
 
-                resultSet.Add(item);
+                resultSet.Add(row);
             }
 
             conn.Close();
@@ -75,7 +82,6 @@ namespace Noisera.Infrastructure
         public static string Insert(IAggregateRoot objectToInsert, string table)
         {
             MySqlConnection conn = GetDatabaseConnection();
-            MySqlConnection conn = this.GetDatabaseConnection();
             List<string> inColumns = new List<string>();
             List<string> nameVariableToValue = new List<string>();
 
