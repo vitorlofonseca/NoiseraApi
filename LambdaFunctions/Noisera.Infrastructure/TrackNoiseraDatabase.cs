@@ -1,7 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
-using System;
+using Newtonsoft.Json.Linq;
+using Noisera.Domain;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Noisera.Infrastructure
 {
@@ -40,6 +40,27 @@ namespace Noisera.Infrastructure
             conn.Close();
 
             return resultSet;
+        }
+
+        public static string getGuidOfStoredTrack(Track track)
+        {
+            JArray filterByGUID = new JArray();
+            filterByGUID.Add(JObject.Parse("{" +
+                    "\"value\": \"" + track.SpotifyId + "\", " +
+                    "\"comparison\": \"=\", " +
+                    "\"columnType\": \"string\", " +
+                    "\"column\": \"SpotifyTrackId\"" +
+
+                "}"));
+
+            List<Dictionary<string, string>> returnedTracks = GenericNoiseraDatabase.Select(filterByGUID, "tracks");
+
+            foreach (Dictionary<string, string> returnedTrack in returnedTracks)
+            {
+                return returnedTrack["GUID"];
+            }
+
+            return null;
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Noisera.Domain
         public int Order { get; private set; }
         public string GigGUID { get; private set; }
         public string TrackGUID { get; private set; }
+        public string Observations { get; private set; }
 
         public GigTrackDTO(Track track, Gig gig)
         {
@@ -15,6 +16,15 @@ namespace Noisera.Domain
             this.Order = track.Order;
             this.GigGUID = gig.GUID;
             this.TrackGUID = track.GUID;
+        }
+
+        public GigTrackDTO(bool Active, int Order, string GigGUID, string TrackGUID, string Observations)
+        {
+            this.Active = Active;
+            this.Order = Order;
+            this.GigGUID = GigGUID;
+            this.TrackGUID = TrackGUID;
+            this.Observations = Observations;
         }
     }
 }

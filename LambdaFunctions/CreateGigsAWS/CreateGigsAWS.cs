@@ -23,34 +23,13 @@ namespace CreateGigsAWS
             return tracks;
         }
 
-        public string getGuidOfStoredTrack(Track track)
-        {
-            JArray filterByGUID = new JArray();
-            filterByGUID.Add(JObject.Parse("{" +
-                    "\"value\": \""+ track.SpotifyId + "\", " +
-                    "\"comparison\": \"=\", " +
-                    "\"columnType\": \"string\", " +
-                    "\"column\": \"SpotifyTrackId\"" +
-
-                "}"));
-
-            List<Dictionary<string, string>> returnedTracks = GenericNoiseraDatabase.Select(filterByGUID, "tracks");
-
-            foreach(Dictionary<string, string> returnedTrack in returnedTracks)
-            {
-                return returnedTrack["GUID"];
-            }
-
-            return null;
-        }
-
         public void insertGig(Gig gig)
         {
             GenericNoiseraDatabase.Insert(new GigDTO(gig), "gigs");
 
             foreach (Track track in gig.Tracks)
             {
-                string guidOfStoredTrack = getGuidOfStoredTrack(track);
+                string guidOfStoredTrack = TrackNoiseraDatabase.getGuidOfStoredTrack(track);
 
                 if (guidOfStoredTrack == null)
                 {
