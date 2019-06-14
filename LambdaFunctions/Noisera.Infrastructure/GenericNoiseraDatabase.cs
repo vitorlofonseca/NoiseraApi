@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Reflection;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
@@ -116,6 +116,85 @@ namespace Noisera.Infrastructure
             conn.Close();
 
             return "";
+        }
+
+        private static bool isIdentifierColumn(List<string> columnsToNotUpdate, string columnName)
+        {
+            return columnsToNotUpdate.Find(s => columnName.Contains(s)) != null;
+        }
+
+        private static string getUpdatesByObject(
+            IAggregateRoot objectToManipulate, 
+            List<string> columnsToNotUpdate)
+        {
+            List<PropertyInfo> valuesToUpdate = new List<PropertyInfo>(objectToManipulate.GetType().GetProperties());
+            List<string> updates = new List<string>();
+
+            foreach (PropertyInfo valueToUpdate in valuesToUpdate)
+            {
+                var value = valueToUpdate.GetValue(objectToManipulate, null);
+                string columnName = (valueToUpdate.ToString()).Split(" ")[1];
+                if (isIdentifierColumn(columnsToNotUpdate, columnName))
+                {
+                    continue;
+                }
+                if (value != null && value.GetType() == typeof(string))
+                {
+                    value = "'" + value + "'";
+                }
+                if (value == null)
+                {
+                    value = "''";
+                }
+                updates.Add("`"+columnName+"` = "+value);
+            }
+
+            return string.Join(", ", updates);
+        }
+
+        private static string getWheresToUpdate(IAggregateRoot objectToManipulate, List<string> columnsToFilter)
+        {
+            List<string> wheres = new List<string>();
+            foreach (string columnName in columnsToFilter)
+            {
+                var columnValue = objectToManipulate.GetType().GetProperty(columnName).GetValue(objectToManipulate, null);
+
+                if (columnValue.GetType() == typeof(string))
+                {
+                    columnValue = "'" + columnValue + "'";
+                }
+                wheres.Add("`"+columnName + "` = " + columnValue);
+            }
+            if (wheres.Count > 0)
+            {
+                return string.Join(" AND ", wheres);
+            }
+            return "1";
+        }
+
+
+        public static int Update(string table, 
+            IAggregateRoot objectToUpdate, 
+            List<string> columnsToFilter)
+        {
+            MySqlConnection conn = GetDatabaseConnection();
+
+            string updates = getUpdatesByObject(objectToUpdate, columnsToFilter);
+            string wheres = getWheresToUpdate(objectToUpdate, columnsToFilter);
+
+            var Cmd = new MySqlCommand($"", conn)
+            {
+                CommandTimeout = 0,
+                CommandText = "UPDATE " + table +
+                              " SET " + updates +
+                              " WHERE " + wheres + ";"
+            };
+
+            conn.Open();
+            Cmd.ExecuteNonQuery();
+            conn.Close();
+
+            return 1;
         }
     }
 }
