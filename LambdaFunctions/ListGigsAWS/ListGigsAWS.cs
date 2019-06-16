@@ -43,7 +43,8 @@ namespace ListGigsAWS
                    genericTrack["Name"],
                    Int32.Parse(genericTrack["Order"]),
                    genericTrack["SpotifyTrackId"],
-                   Int32.Parse(genericTrack["Year"])
+                   Int32.Parse(genericTrack["Year"]),
+                   genericTrack["Observations"]
                 );
 
                 trackList.Add(track);

@@ -16,8 +16,19 @@ namespace Noisera.Domain
         public int Order { get; private set; }
         public string SpotifyId { get; private set; }
         public int Year { get; private set; }
+        public string Observations { get; private set; }
 
-        public Track(string guid, bool active, string album, string artist, string image, string name, int order, string spotifyId, int year)
+        public Track(
+            string guid, 
+            bool active, 
+            string album, 
+            string artist, 
+            string image, 
+            string name, 
+            int order, 
+            string spotifyId, 
+            int year,
+            string observations)
         {
             this.GUID = String.IsNullOrEmpty(guid) ? Guid.NewGuid().ToString() : guid;
             this.Active = active;
@@ -28,6 +39,7 @@ namespace Noisera.Domain
             this.Order = order;
             this.SpotifyId = spotifyId;
             this.Year = year;
+            this.Observations = observations;
         }
     }
 }

@@ -31,6 +31,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Noisera.Infrastructure", "N
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SaveTrackAWS", "SaveTrackAWS\SaveTrackAWS.csproj", "{8501267F-E2C0-468E-86E7-BDC8EA3ACE24}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpdateTracksOrder", "UpdateTracksOrder\UpdateTracksOrder.csproj", "{111910EF-A3FD-4710-A77C-2F79C28AB763}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,10 @@ Global
 		{8501267F-E2C0-468E-86E7-BDC8EA3ACE24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8501267F-E2C0-468E-86E7-BDC8EA3ACE24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8501267F-E2C0-468E-86E7-BDC8EA3ACE24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{111910EF-A3FD-4710-A77C-2F79C28AB763}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{111910EF-A3FD-4710-A77C-2F79C28AB763}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{111910EF-A3FD-4710-A77C-2F79C28AB763}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{111910EF-A3FD-4710-A77C-2F79C28AB763}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,6 +105,7 @@ Global
 		{586C98A1-5EED-47D5-BAD0-C7DDC276C9C2} = {8CEC1092-9390-48F9-9F17-6DD15D9DD72B}
 		{0DD6D200-356D-41EC-B8D2-3E94ED2D0D08} = {A6627322-3B77-4693-9E84-71818D4FE30B}
 		{8501267F-E2C0-468E-86E7-BDC8EA3ACE24} = {8CEC1092-9390-48F9-9F17-6DD15D9DD72B}
+		{111910EF-A3FD-4710-A77C-2F79C28AB763} = {8CEC1092-9390-48F9-9F17-6DD15D9DD72B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4B697E70-AF3C-4290-BF45-FA804B7CFFBC}

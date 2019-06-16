@@ -13,7 +13,8 @@ namespace Noisera.Infrastructure
 
             string query = "SELECT * FROM tracks " +
                             "INNER JOIN tracks_gig ON tracks_gig.TrackGUID = tracks.GUID " +
-                            "WHERE tracks_gig.GigGUID = '" + gigGuid + "'";
+                            "WHERE tracks_gig.GigGUID = '" + gigGuid + "' " +
+                            "ORDER BY tracks_gig.Order;";
 
             conn.Open();
 
@@ -30,7 +31,12 @@ namespace Noisera.Infrastructure
                 for (int index = 0; index < reader.FieldCount; index++)
                 {
                     string parameterName = reader.GetName(index);
-                    string parameterValue = reader.GetString(index);
+                    string parameterValue = "";
+
+                    if (!reader.IsDBNull(index))
+                    {
+                        parameterValue = reader.GetString(index);
+                    }
                     row.Add(parameterName, parameterValue);
                 }
 
