@@ -11,6 +11,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Noisera.Core\Noisera.Core.csproj" />
     <ProjectReference Include="..\Noisera.Domain\Noisera.Domain.csproj" />
     <ProjectReference Include="..\Noisera.Infrastructure\Noisera.Infrastructure.csproj" />
   </ItemGroup>

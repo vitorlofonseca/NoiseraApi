@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-using MySql.Data.MySqlClient;
 using Amazon.Lambda.Core;
 using Noisera.Domain;
 using Noisera.Infrastructure;

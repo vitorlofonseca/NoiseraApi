@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Amazon.Lambda.Core;
-using MySql.Data.MySqlClient;
 using Newtonsoft.Json.Linq;
+using Amazon.Lambda.Core;
+using Noisera.Infrastructure;
 using Noisera.Domain;
 
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
@@ -11,50 +11,60 @@ namespace ListBandsAWS
 {
     public class ListBandsAWS
     {
-        public JObject ListBandsHandler()
+        public JObject ListBandsHandler(JObject input)
         {
-            string server = Environment.GetEnvironmentVariable("db_server");
-            string database = Environment.GetEnvironmentVariable("db_name");
-            string username = Environment.GetEnvironmentVariable("db_user");
-            string pwd = Environment.GetEnvironmentVariable("db_pass");
-            string port = Environment.GetEnvironmentVariable("db_port");
-            string ConnectionString = String.Format("Server={0}; Port={4}; Database={1}; Uid={2}; Pwd={3};", server, database, username, pwd, port);
+            List<Band> BandsList = getBandsList(input["spotifyUserId"].ToString());
 
-            MySqlConnection Conn = new MySqlConnection(ConnectionString);
+            JObject Bands = new JObject
+            {
+                ["bands"] = JToken.FromObject(BandsList)
+            };
 
-            JObject response = ListBands(Conn);
+            JObject response = Bands;
 
             return response;
         }
 
-        private JObject ListBands(MySqlConnection conn)
+        private List<Band> getBandsList(string spotifyUserId)
         {
-            var Cmd = new MySqlCommand($"SELECT * FROM bands", conn)
+            List<Dictionary<string, string>> genericBands = BandNoiseraDatabase.GetBandsByUserSpotifyId(spotifyUserId);
+            List<Band> bandList = new List<Band>();
+
+            foreach (Dictionary<string, string> genericBand in genericBands)
             {
-                CommandTimeout = 0
-            };
+                List<string> SpotifyUsersId = getSpotifyUsersIdByBandGUID(genericBand["GUID"].ToString());
 
-            conn.Open();
-            var DataReader = Cmd.ExecuteReader();
+                Band band = new Band(
+                   genericBand["GUID"].ToString(),
+                   genericBand["Name"].ToString(),
+                   SpotifyUsersId
+               );
 
-            List<Band> BandsList = new List<Band>();
+                bandList.Add(band);
 
-            while (DataReader.Read())
-            {
-                Band Band = new Band(
-                    DataReader["GUID"].ToString(),
-                    DataReader["Name"].ToString()
-                );
-                BandsList.Add(Band);
             }
 
-            JObject Bands = new JObject
-            {
-                ["Bands"] = JToken.FromObject(BandsList)
-            };
+            return bandList;
+        }
 
-            conn.Close();
-            return Bands;
+        private List<string> getSpotifyUsersIdByBandGUID(string bandGuid)
+        {
+            List<Dictionary<string, string>> bandsUsers = GenericNoiseraDatabase.Select(
+                JArray.Parse("[{" +
+                    "\"value\": \"" + bandGuid + "\", " +
+                    "\"comparison\": \"=\", " +
+                    "\"columnType\": \"string\", " +
+                    "\"column\": \"BandGUID\"" +
+                "}]"), 
+                "bands_users");
+            List<string> SpotifyUsersIds = new List<string>();
+
+            foreach (Dictionary<string, string> bandUser in bandsUsers)
+            {
+                SpotifyUsersIds.Add(bandUser["SpotifyUserId"]);
+            }
+
+            return SpotifyUsersIds;
         }
     }
 }

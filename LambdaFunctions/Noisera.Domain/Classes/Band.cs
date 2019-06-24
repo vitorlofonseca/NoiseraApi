@@ -11,11 +11,11 @@ namespace Noisera.Domain
         public string Name { get; private set; }
         public List<string> SpotifyUsersId { get; private set; }
 
-        public Band(string guid, string name, JArray spotifyUsersId)
+        public Band(string guid, string name, List<string> spotifyUsersId)
         {
             GUID = String.IsNullOrEmpty(guid) ? Guid.NewGuid().ToString() : guid;
             Name = name;
-            SpotifyUsersId = spotifyUsersId.ToObject<List<string>>();
+            SpotifyUsersId = spotifyUsersId;
         }
     }
 }
