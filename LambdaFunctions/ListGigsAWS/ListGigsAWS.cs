@@ -11,10 +11,11 @@ namespace ListGigsAWS
 {
     public class ListGigsAWS
     {
-        public JObject ListGigsHandler()
+        public JObject ListGigsHandler(JObject input)
         {
+            string bandGUID = input["bandGUID"].ToString();
 
-            List<Gig> GigsList = getGigList();
+            List<Gig> GigsList = getGigList(bandGUID);
 
             JObject Gigs = new JObject
             {
@@ -53,9 +54,18 @@ namespace ListGigsAWS
             return trackList;
         }
 
-        private List<Gig> getGigList()
+        private List<Gig> getGigList(string bandGUID)
         {
-            List<Dictionary<string, string>> genericGigs = GenericNoiseraDatabase.Select(new JArray(), "gigs");
+            JArray filterByBandGUID = new JArray();
+            filterByBandGUID.Add(JObject.Parse("{" +
+                    "\"value\": \"" + bandGUID + "\", " +
+                    "\"comparison\": \"=\", " +
+                    "\"columnType\": \"string\", " +
+                    "\"column\": \"BandGUID\"" +
+
+                "}"));
+
+            List<Dictionary<string, string>> genericGigs = GenericNoiseraDatabase.Select(filterByBandGUID, "gigs");
             List<Gig> gigList = new List<Gig>();
 
             foreach (Dictionary<string, string> genericGig in genericGigs)

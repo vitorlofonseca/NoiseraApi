@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Reflection;
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
@@ -11,6 +11,12 @@ namespace Noisera.Infrastructure
     {
         public static MySqlConnection GetDatabaseConnection()
         {
+            Environment.SetEnvironmentVariable("db_server", "noisera-db.cx3rqev00cim.us-east-1.rds.amazonaws.com");
+            Environment.SetEnvironmentVariable("db_name", "noiseradb");
+            Environment.SetEnvironmentVariable("db_user", "noiserauser");
+            Environment.SetEnvironmentVariable("db_pass", "noiserapass");
+            Environment.SetEnvironmentVariable("db_port", "3306");
+
             string server = Environment.GetEnvironmentVariable("db_server");
             string database = Environment.GetEnvironmentVariable("db_name");
             string username = Environment.GetEnvironmentVariable("db_user");
