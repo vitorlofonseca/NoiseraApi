@@ -9,4 +9,3 @@ The scripts and configurations contained in this project are running on Amazon A
 + [AWS API Gateway](https://aws.amazon.com/api-gateway/), to manage API endpoints
 + [AWS Lambda](https://aws.amazon.com/lambda/), containing all application policies and integrations
 + [AWS RDS](https://aws.amazon.com/rds/), to store application data, like tryouts and his songs, schedules, band roles, and others
-+ [AWS S3](https://aws.amazon.com/s3/), to store media associated with each song of tryout, like videos, sheets, and others
